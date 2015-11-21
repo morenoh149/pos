@@ -1,0 +1,11 @@
+{
+  "name": "kontor-challenge",
+  "version": "1.0.0",
+  "description": "solution to POS js challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Harry Moreno",
+  "license": "ISC"
+}
