@@ -21,14 +21,12 @@ var terminal = function() {
    * names must be unique
    */
    var setPricing = function(obj) {
-     if (obj.name && obj.price &&
-         obj.price.unitPrice && obj.price.volume &&
-         obj.price.volume.units && obj.price.volume.price) {
-       if (!this.pricing.some(function(p) { return p.name === obj.name })) {
+     if (obj.name && obj.price && obj.price.unitPrice) {
+       if (!pricing.some(function(p) { return p.name === obj.name })) {
          if (!obj.quantity) {
            obj.quantity = 0
          }
-         this.pricing.push(obj)
+         pricing.push(obj)
        } else {
          throw 'A product with that name already exists.'
        }
@@ -45,8 +43,7 @@ var terminal = function() {
      pricing.forEach(function(p) {
        if (p.name === productName) {
          p.quantity += 1
-         total = sum()
-         console.log('Cart total: $%d', total)
+         this.total = sum()
        }
      }, this)
    }
@@ -57,10 +54,13 @@ var terminal = function() {
    var sum = function() {
      var sum = 0
      pricing.forEach(function(p) {
-       var whole = Math.floor(p.quantity/p.price.volume.units)
-       var remainder = p.quantity - (whole * p.price.volume.units)
-       var cost = (whole * p.price.volume.price) + (remainder * p.price.unitPrice)
-       console.log(p, whole, remainder, cost)
+       if (p.price.volume) {
+         var whole = Math.floor(p.quantity/p.price.volume.units)
+         var remainder = p.quantity - (whole * p.price.volume.units)
+         var cost = (whole * p.price.volume.price) + (remainder * p.price.unitPrice)
+       } else {
+         var cost = p.price.unitPrice * p.quantity
+       }
        sum += cost
      })
      return sum
@@ -68,7 +68,6 @@ var terminal = function() {
 
    return {
      total: total,
-     pricing: pricing,
      setPricing: setPricing,
      scan: scan
    }
