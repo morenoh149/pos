@@ -2,8 +2,8 @@
  * Terminal constructor
  * returns a terminal object
  */
-var terminal = function() {
-  var total = 0
+function Terminal() {
+  this.total = 0
   var pricing = [{
     name: 'productName',
     price: {
@@ -20,7 +20,7 @@ var terminal = function() {
    *   price: { unitPrice: float, volume: { units: float, price: float }}}
    * names must be unique
    */
-   var setPricing = function(obj) {
+   this.setPricing = function(obj) {
      if (obj.name && obj.price && obj.price.unitPrice) {
        if (!pricing.some(function(p) { return p.name === obj.name })) {
          if (!obj.quantity) {
@@ -39,7 +39,7 @@ var terminal = function() {
     * Adds item to cart,
     * updates cart total
     */
-   var scan = function(productName) {
+    this.scan = function(productName) {
      pricing.forEach(function(p) {
        if (p.name === productName) {
          p.quantity += 1
@@ -52,7 +52,7 @@ var terminal = function() {
     * Private function, used internally to calculate cart total
     */
    var sum = function() {
-     var sum = 0
+     var result = 0
      pricing.forEach(function(p) {
        if (p.price.volume) {
          var whole = Math.floor(p.quantity/p.price.volume.units)
@@ -61,16 +61,10 @@ var terminal = function() {
        } else {
          var cost = p.price.unitPrice * p.quantity
        }
-       sum += cost
+       result += cost
      })
-     return sum
-   }
-
-   return {
-     total: total,
-     setPricing: setPricing,
-     scan: scan
+     return result
    }
 }
 
-exports.terminal = terminal
+module.exports = Terminal

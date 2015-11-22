@@ -5,7 +5,7 @@ describe('Terminal', function() {
   describe('should print correct total', function () {
     var terminal;
     beforeEach(function() {
-      terminal = Terminal.terminal()
+      terminal = new Terminal()
       terminal.setPricing({name: 'A', price: { unitPrice: 2, volume: { units: 4, price: 7 }}})
       terminal.setPricing({name: 'B', price: { unitPrice: 12 }})
       terminal.setPricing({name: 'C', price: { unitPrice: 1.25, volume: { units: 6, price: 6 }}})
