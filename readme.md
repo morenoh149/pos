@@ -1,4 +1,4 @@
-# Kontor challenge solution
+# Point Of Sale
 
 ## usage
 * `$ npm install`
